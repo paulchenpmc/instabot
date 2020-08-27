@@ -1,25 +1,31 @@
 from time import sleep
 from selenium import webdriver
 
+# Initialize firefox and load instagram
 browser = webdriver.Firefox()
 browser.implicitly_wait(5)
-
 browser.get('https://www.instagram.com/')
 
-login_link = browser.find_element_by_xpath("//a[text()='Log in']")
-login_link.click()
+# Load user info from file
+with open('.uinfo', 'r') as infile:
+    username = infile.readline().strip()
+    password = infile.readline().strip()
 
-sleep(2)
-
+# Login
 username_input = browser.find_element_by_css_selector("input[name='username']")
 password_input = browser.find_element_by_css_selector("input[name='password']")
-
-username_input.send_keys("<your username>")
-password_input.send_keys("<your password>")
-
+username_input.send_keys(username)
+password_input.send_keys(password)
 login_button = browser.find_element_by_xpath("//button[@type='submit']")
 login_button.click()
 
-sleep(5)
+# Bypass 'Save Your Login Info' screen
+next_button = browser.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
+next_button.click()
 
-browser.close()
+# Bypass 'Turn on Notifications' popup
+next_button = browser.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
+next_button.click()
+
+# sleep(5)
+# browser.close()
