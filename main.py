@@ -15,7 +15,7 @@ userList = [line for line in userfile.readlines()]
 
 # Like posts of target users
 session.set_do_like(True, percentage=100)
-num_recent_posts_to_like = 3 # Likes last 3 posts
+num_recent_posts_to_like = 2 # Likes last N posts
 session.interact_by_users(userList, amount=num_recent_posts_to_like, randomize=False)
 
 # End session
